@@ -10,7 +10,7 @@ class StudentPost extends Model
     use HasFactory;
 
     protected $fillable = [
-        'gambar',
+        'image',
         'nama',
         'jurusan',
         'nis',

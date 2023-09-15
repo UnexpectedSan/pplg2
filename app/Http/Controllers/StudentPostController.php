@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\StudentPost;
+use Illuminate\Http\RedirectResponse;
 
 class StudentPostController extends Controller
 {
@@ -29,9 +30,29 @@ class StudentPostController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
-        //
+        $this->validate($request, [
+            'image' => 'required|image|mimes:png,jpg,jpeg|max:2048',
+            'nama' => 'required',
+            'jurusan' => 'required',
+            'nis' => 'required|unique:student_posts',
+            'alamat' => 'required|min:10'
+        ]);
+
+        // uploud gamabar
+        $image = $request->file('image');
+        $image->storeAs('public/post', $image->hashName());
+
+        StudentPost::create([
+            'image' => $image->hashName(),
+            'nama' => $request->nama,
+            'jurusan' => $request->jurusan,
+            'nis' => $request->nis,
+            'alamat' => $request->alamat
+        ]);
+
+        return redirect()->route('post.index')->with(['success' => 'Data Berhasil Disimpan!']);
     }
 
     /**

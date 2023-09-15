@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('student_posts', function (Blueprint $table) {
             $table->id();
-            $table->string('gambar');
+            $table->string('image');
             $table->string('nama');
             $table->enum('jurusan', [
                 'PPLG', 

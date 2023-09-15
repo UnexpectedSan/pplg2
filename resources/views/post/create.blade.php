@@ -1,14 +1,14 @@
 @extends('layouts.main')
 
 @section('content')
-    <form method="POST" action="{{ route('post.store') }}">
+    <form method="POST" action="{{ route('post.store') }}" enctype="multipart/form-data">
         @csrf
         <div class="mb-3">
-            <label for="formFile" class="form-label">Pilih Foto</label>
-            <input class="form-control" type="file" name="gambar" id="formFile">
-            @error('gambar')
-                <div class="alert alert-danger" role="alert">
-                    Foto Tidak Boleh Kosong!
+            <label for="file" class="form-label">Foto</label>
+            <input type="file" name="image" class="form-control" id="file">
+            @error('image')
+                <div class="alert alert-danger mt-2">
+                    {{ $message }}
                 </div>
             @enderror
         </div>
