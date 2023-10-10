@@ -22,7 +22,7 @@ class StudentPostController extends Controller
      */
     public function create()
     {
-        $title = 'Form Tambah Data Siswa';
+        $title  = 'Form Tambah Data Siswa';
         $Sposts = StudentPost::all();
         return view('post.create', compact('Sposts', 'title'));
     }
@@ -30,14 +30,14 @@ class StudentPostController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request): RedirectResponse
+    public function store(Request $request)
     {
         $this->validate($request, [
-            'image' => 'required|image|mimes:png,jpg,jpeg|max:2048',
-            'nama' => 'required',
-            'jurusan' => 'required',
-            'nis' => 'required|unique:student_posts',
-            'alamat' => 'required|min:10'
+            'image'     => 'required|image|mimes:png,jpg,jpeg|max:2048',
+            'nama'      => 'required',
+            'jurusan'   => 'required',
+            'nis'       => 'required|unique:student_posts',
+            'alamat'    => 'required|min:10'
         ]);
 
         // uploud gamabar
@@ -45,14 +45,15 @@ class StudentPostController extends Controller
         $image->storeAs('public/post', $image->hashName());
 
         StudentPost::create([
-            'image' => $image->hashName(),
-            'nama' => $request->nama,
-            'jurusan' => $request->jurusan,
-            'nis' => $request->nis,
-            'alamat' => $request->alamat
+            'image'     => $image->hashName(),
+            'nama'      => $request->nama,
+            'jurusan'   => $request->jurusan,
+            'nis'       => $request->nis,
+            'alamat'    => $request->alamat
         ]);
 
-        return redirect()->route('post.index')->with(['success' => 'Data Berhasil Disimpan!']);
+        return redirect()->route('post.index')
+        ->with(['success' => 'Data Berhasil Disimpan!']);
     }
 
     /**
@@ -60,7 +61,8 @@ class StudentPostController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $post = StudentPost::findOrFail($id);
+        return view('post.show', compact('post'));
     }
 
     /**

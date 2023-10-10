@@ -2,7 +2,7 @@
 
 @section('content')
     <a href="{{ route('post.create') }}" class="btn btn-outline-success">Tambah Data</a>
-    <table class="table table-hover">
+    <table id="myTable" class="table table-hover">
         <thead>
             <tr>
                 <th scope="col">No</th>
@@ -16,16 +16,19 @@
         </thead>
         <tbody>
             @forelse ($Sposts as $Spost)
+                @php
+                    $no = 0;
+                @endphp
                 <tr>
-                    <th scope="row">1</th>
-                    <td>{{ $Spost->gambar }}</td>
+                    <th>{{ ++$no }}</th>
+                    <td>{{ $Spost->image }}</td>
                     <td>{{ $Spost->nama }}</td>
                     <td>{{ $Spost->nis }}</td>
                     <td>{{ $Spost->jurusan }}</td>
                     <td>{{ $Spost->alamat }}</td>
                     <td>
                         <a href="" class="btn btn-primary">Edit</a>
-                        <a href="" class="btn btn-secondary">Lihat</a>
+                        <a href="{{ route('post.show', $Spost->id) }}" class="btn btn-secondary">Lihat</a>
                         <a href="" class="btn btn-danger">Hapus</a>
                     </td>
                 </tr>
